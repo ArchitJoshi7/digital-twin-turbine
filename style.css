@@ -1,0 +1,231 @@
+/* ═══════════════════════════════════════════════
+   GLOBAL RESET & TYPOGRAPHY
+   ═══════════════════════════════════════════════ 
+   Removes default browser padding and sets our clean Google Font 
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* Hide scrollbars because our WebGL canvas should take up the exact screen */
+    overflow: hidden;
+    /* Very light grey background for any areas the canvas doesn't cover */
+    background: #e4ebf2;
+    /* Dark slate gray text for high contrast */
+    color: #2d3748;
+}
+
+/* ═══════════════════════════════════════════════
+   3D VIEWPORT
+   ═══════════════════════════════════════════════ 
+   Forces the Three.js canvas to cover the whole monitor 
+*/
+#viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   FLOATING GLASS UI PANEL
+   ═══════════════════════════════════════════════ 
+   This is the main control interface sitting on top of the 3D scene 
+*/
+#ui-panel {
+    /* Pin to the top right of the screen */
+    position: absolute;
+    top: 40px;
+    right: 40px;
+
+    /* Sleek width constraint */
+    width: 400px;
+    padding: 24px;
+    border-radius: 16px;
+
+    /* GLASSMORPHISM EFFECTS */
+    /* Semi-transparent white background */
+    background: rgba(255, 255, 255, 0.85);
+
+    /* Subtle borders for depth */
+    border: 1px solid rgba(24, 2, 2, 0.4);
+}
+
+/* ═══════════════════════════════════════════════
+   PANEL HEADER
+   ═══════════════════════════════════════════════ 
+*/
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.panel-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a202c;
+    /* Deep slate */
+}
+
+/* The small "Idle/Running" status badge */
+.badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #e2e8f0;
+    color: #4a5568;
+    transition: all 0.3s ease;
+}
+
+/* When the simulation is active, badge turns bright blue */
+.badge.running {
+    background: #ebf8ff;
+    color: #3182ce;
+    box-shadow: 0 0 8px rgba(49, 130, 206, 0.3);
+}
+
+/* ═══════════════════════════════════════════════
+   TELEMETRY ROW (X, Y, Z coordinates)
+   ═══════════════════════════════════════════════ 
+*/
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Axis Labels (X/Y/Z) */
+.info-item .label {
+    font-size: 0.75rem;
+    color: #718096;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+/* Numeric Values */
+.info-item .value {
+    font-family: monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+/* ═══════════════════════════════════════════════
+   PROGRESS BAR
+   ═══════════════════════════════════════════════ 
+*/
+.progress-container {
+    height: 4px;
+    background: #edf2f7;
+    /* Very faint gray track */
+    border-radius: 2px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+/* The actual advancing blue bar */
+#progress-bar {
+    height: 100%;
+    background: #3182ce;
+    width: 0%;
+    /* Gets updated via javascript */
+}
+
+/* ═══════════════════════════════════════════════
+   SPEED CONTROL
+   ═══════════════════════════════════════════════ 
+*/
+.speed-control {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.speed-control .label {
+    font-size: 0.85rem;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+.speed-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.speed-btn {
+    flex: 1;
+    padding: 6px;
+    font-size: 0.75rem;
+    border: 1px solid #cbd5e0;
+    background: transparent;
+    border-radius: 4px;
+    color: #4a5568;
+    cursor: pointer;
+}
+
+.speed-btn.active {
+    background: #3182ce;
+    color: white;
+    border-color: #3182ce;
+}
+
+/* ═══════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════ 
+*/
+.controls {
+    display: flex;
+    gap: 12px;
+}
+
+button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #edf2f7;
+    color: #4a5568;
+}
+
+button:hover {
+    background: #e2e8f0;
+}
+
+/* Primary Play Button */
+#btn-play {
+    background: #3182ce;
+    color: white;
+}
+
+#btn-play:hover {
+    background: #2b6cb0;
+}
+
+/* Play button turns dark red when acting as "Pause" */
+#btn-play.active {
+    background: #e53e3e;
+}
+
+#btn-play.active:hover {
+    background: #c53030;
+}
