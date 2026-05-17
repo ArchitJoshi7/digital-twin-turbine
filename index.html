@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ═══════════════════════════════════════════════
+  MINIMAL CNC SIMULATION
+  ═══════════════════════════════════════════════
+  This is a sleek, glassmorphism-based digital twin interface for visualizing 
+  CNC toolpaths. It utilizes Three.js for rendering and a custom JS engine 
+  for mathematical G-Code interpolation.
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Twin - Industrial Turbine</title>
+
+    <!-- Load clean, modern typography (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Load Three.js 3D library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Link out to our minimalist styling -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- 
+      VIEWPORT
+      This div takes up the entire screen. Three.js hooks into the <canvas> 
+      element here to render the 3D grid, tool, and toolpaths. 
+    -->
+    <div id="viewport">
+        <canvas id="cnv"></canvas>
+    </div>
+
+    <!-- 
+      UI PANEL
+      This is the floating glass-effect control widget at the bottom.
+      It displays telemetry (X/Y/Z) and provides playback controls.
+    -->
+    <div id="ui-panel">
+
+        <!-- Header & Status Tag -->
+        <div class="panel-header">
+            <h2>G Code Simulation</h2>
+            <span id="status-badge" class="badge">Idle</span>
+        </div>
+
+        <!-- Live Coordinates Telemetry Box -->
+        <div class="info-row">
+            <div class="info-item">
+                <span class="label">X</span>
+                <span class="value" id="val-x">0.00</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Y</span>
+                <span class="value" id="val-y">0.00</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Z</span>
+                <span class="value" id="val-z">50.00</span>
+            </div>
+        </div>
+
+        <!-- Thin linear progress bar -->
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+
+        <!-- Speed Control -->
+        <div class="speed-control">
+            <span class="label">Speed</span>
+            <div class="speed-buttons">
+                <button class="speed-btn" onclick="uiSetSpeed(1, this)">Slow</button>
+                <button class="speed-btn active" onclick="uiSetSpeed(2, this)">Regular</button>
+                <button class="speed-btn" onclick="uiSetSpeed(100, this)">Fast</button>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="controls">
+            <!-- Play/Pause Toggle -->
+            <button id="btn-play" onclick="uiTogglePlay()">Play</button>
+            <!-- Emergency Reset -->
+            <button id="btn-reset" onclick="uiReset()">Reset</button>
+            <!-- Camera Alignment Reset -->
+            <button id="btn-cam" onclick="uiResetCam()">Recenter</button>
+        </div>
+    </div>
+
+    <!-- 
+      SCRIPT IMPORTS
+      Loading our decoupled modules sequentially to keep scope clean.
+    -->
+    <script src="js/gcode.js"></script> <!-- The raw string data of the toolpath -->
+    <script src="js/parser.js"></script> <!-- String conversion -> Command Objects -->
+    <script src="js/scene.js"></script> <!-- 3D Graphics initialization & logic -->
+    <script src="js/simulator.js"></script> <!-- Time & kinematics math engine -->
+    <script src="js/ui.js"></script> <!-- HTML Button and Display hookups -->
+    <script src="js/main.js"></script> <!-- Central bootstrap logic -->
+</body>
+
+</html>
